@@ -1,0 +1,71 @@
+#include<iostream>
+using namespace std;
+
+
+void merge(int left[], int right[], int arr[], int nl, int nr){
+    int i=0,j=0,k=0;
+
+    while(i<nl && j<nr){
+        if(left[i]<right[j]){
+            arr[k]=left[i];
+            i=i+1;
+
+        }
+        else{
+            arr[k]=right[j];
+            j=j+1;
+        }
+        k=k+1;
+    }
+
+    while(i<nl){
+        arr[k]=left[i];
+        i=i+1;
+        k=k+1;
+    }
+
+    while(j<nr){
+        arr[k]=right[j];
+        j=j+1;
+        k=k+1;
+    }
+}
+void mergesort(int arr[], int n){
+
+    if(n<2){
+        return ;
+    }
+
+    int mid=n/2;
+    int left[mid];
+    int right[n-mid];
+
+    for(int i=0;i<mid;i++){
+        left[i]=arr[i];
+    }
+
+    for(int i=mid;i<n;i++){
+        right[i-mid]=arr[i];
+
+    }
+
+    mergesort(left,mid);
+    mergesort(right, n-mid);
+    merge(left,right, arr, mid, n-mid);
+
+}
+int main(){
+    int n;
+    cin>>n;
+    int arr[n];
+
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+
+    mergesort(arr, n);
+
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<"_";
+    }
+}
